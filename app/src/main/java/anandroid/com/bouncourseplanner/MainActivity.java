@@ -6,8 +6,21 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import adapter.PageAdapter;
+import data.Models;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +30,21 @@ public class MainActivity extends AppCompatActivity {
     public LinearLayout leftDrawer;
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle drawerToggle;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        drawerToggle.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        initTabs();
+        initDrawer();
+        parseCourses();
+    }
 
     private void initTabs() {
         viewPager = (ViewPager) findViewById(R.id.pager);
@@ -35,17 +63,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        drawerToggle.onOptionsItemSelected(item);
-        return super.onOptionsItemSelected(item);
+    private void parseCourses () {
+
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initTabs();
-        initDrawer();
-    }
 }

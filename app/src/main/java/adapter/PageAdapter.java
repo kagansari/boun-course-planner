@@ -1,8 +1,11 @@
-package anandroid.com.bouncourseplanner;
+package adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import anandroid.com.bouncourseplanner.ScheduleFragment;
+import anandroid.com.bouncourseplanner.SearchFragment;
 
 /**
  * Created by tv on 11/06/16.

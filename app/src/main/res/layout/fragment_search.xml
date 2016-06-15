@@ -7,9 +7,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:layout_height="match_parent">
 
         <EditText
             android:layout_width="match_parent"
@@ -17,6 +15,14 @@
             android:id="@+id/courseET"
             android:layout_gravity="center_horizontal"
             android:hint="@string/course" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/courseList"
+            android:layout_gravity="center_horizontal"
+            android:choiceMode="none" />
+
     </LinearLayout>
 
 </FrameLayout>
