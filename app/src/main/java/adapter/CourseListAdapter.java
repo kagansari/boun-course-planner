@@ -1,7 +1,8 @@
 package adapter;
 
 import android.content.Context;
-import android.util.Log;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +17,18 @@ import java.util.ArrayList;
 import anandroid.com.bouncourseplanner.R;
 import data.Models;
 import helper.CourseHelper;
+import view.CourseInfoFragment;
 
 public class CourseListAdapter extends BaseAdapter implements Filterable {
 
     public LayoutInflater inflater;
     public ArrayList<Models.Course> visibleCourses;
     public Filter searchFilter;
+    public AppCompatActivity context;
 
     public CourseListAdapter(Context context) {
         this.visibleCourses = new ArrayList<>();
+        this.context = (AppCompatActivity) context;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         searchFilter = new SearchFilter();
     }
@@ -54,12 +58,36 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
         final Button addBtn = (Button) row.findViewById(R.id.addBtn);
         final Button removeBtn = (Button) row.findViewById(R.id.removeBtn);
 
+        courseCodeSecTV.setText(course.codeSec);
+        String schedule = "";
+        for (Models.ScheduleItem item: course.schedule) {
+            schedule += item.day + item.hour + ", ";
+        }
+        courseScheduleTV.setText(schedule);
+
         boolean isInSchedule = CourseHelper.isInSchedule(course);
         if (isInSchedule) {
             removeBtn.setVisibility(View.VISIBLE);
         } else {
             addBtn.setVisibility(View.VISIBLE);
         }
+
+        final String finalSchedule = schedule;
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CourseInfoFragment fragment = new CourseInfoFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("codeSec", course.codeSec);
+                bundle.putString("name", course.name);
+                bundle.putString("hours", finalSchedule);
+                bundle.putString("instructor", course.instructor);
+                bundle.putInt("credit", course.credit);
+                bundle.putInt("ects", course.ects);
+                fragment.setArguments(bundle);
+                fragment.show(context.getSupportFragmentManager(), "courseInfo");
+            }
+        });
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,13 +105,6 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
                 removeBtn.setVisibility(View.INVISIBLE);
             }
         });
-
-        courseCodeSecTV.setText(course.codeSec);
-        String schedule = "";
-        for (Models.ScheduleItem item: course.schedule) {
-            schedule += item.day + item.hour + ", ";
-        }
-        courseScheduleTV.setText(schedule);
         return row;
     }
 
