@@ -1,6 +1,5 @@
 package adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,10 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 import anandroid.com.bouncourseplanner.R;
 import data.Models;
@@ -44,15 +41,15 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        View row = inflater.inflate(R.layout.course_container, null);
+        View row = inflater.inflate(R.layout.row_course, null);
         TextView courseCodeSecTV = (TextView) row.findViewById(R.id.courseCodeSecTV);
         TextView courseScheduleTV = (TextView) row.findViewById(R.id.courseScheduleTV);
-        Models.Course course = courses.get(position);
+        Models.Course course = visibleCourses.get(position);
         courseCodeSecTV.setText(course.codeSec);
         String schedule = "";
         for (Models.ScheduleItem item: course.schedule) {
@@ -66,7 +63,6 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
     public Filter getFilter() {
         return searchFilter;
     }
-
 
     public class SearchFilter extends Filter {
 

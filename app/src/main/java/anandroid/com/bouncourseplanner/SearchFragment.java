@@ -16,6 +16,8 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,12 +46,22 @@ public class SearchFragment extends Fragment implements TextWatcher {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Gson gson = new Gson();
-        ArrayList<Models.Course> courses = gson.fromJson(Models.dummy, new TypeToken<List<Models.Course>>(){}.getType());
-        courseList = (ListView) view.findViewById(R.id.courseList);
-        adapter = new CourseListAdapter(getActivity(), courses);
-        courseList.setAdapter(adapter);
-        courseET = (EditText) view.findViewById(R.id.courseET);
-        courseET.addTextChangedListener(this);
+        try {
+            InputStream is = getActivity().getAssets().open("data.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            ArrayList<Models.Course> courses = gson.fromJson(new String(buffer, "UTF-8"), new TypeToken<List<Models.Course>>(){}.getType());
+            courseList = (ListView) view.findViewById(R.id.courseList);
+            adapter = new CourseListAdapter(getActivity(), courses);
+            courseList.setAdapter(adapter);
+            courseET = (EditText) view.findViewById(R.id.courseET);
+            courseET.addTextChangedListener(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

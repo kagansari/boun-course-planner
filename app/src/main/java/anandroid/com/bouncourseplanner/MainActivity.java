@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initTabs();
         initDrawer();
-        parseCourses();
     }
 
     private void initTabs() {
@@ -62,9 +61,4 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
-
-    private void parseCourses () {
-
-    }
-
 }
