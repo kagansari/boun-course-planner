@@ -52,6 +52,8 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
     public View getView(final int position, View convertView, ViewGroup parent) {
         final Models.Course course = visibleCourses.get(position);
 
+        final int realPos = CourseHelper.courses.indexOf(course);
+
         View row = inflater.inflate(R.layout.row_course, null);
         TextView courseCodeSecTV = (TextView) row.findViewById(R.id.courseCodeSecTV);
         TextView courseScheduleTV = (TextView) row.findViewById(R.id.courseScheduleTV);
@@ -59,11 +61,7 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
         final Button removeBtn = (Button) row.findViewById(R.id.removeBtn);
 
         courseCodeSecTV.setText(course.codeSec);
-        String schedule = "";
-        for (Models.ScheduleItem item: course.schedule) {
-            schedule += item.day + item.hour + ", ";
-        }
-        courseScheduleTV.setText(schedule);
+        courseScheduleTV.setText(course.scheduleStr);
 
         boolean isInSchedule = CourseHelper.isInSchedule(course);
         if (isInSchedule) {
@@ -72,18 +70,12 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
             addBtn.setVisibility(View.VISIBLE);
         }
 
-        final String finalSchedule = schedule;
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CourseInfoFragment fragment = new CourseInfoFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("codeSec", course.codeSec);
-                bundle.putString("name", course.name);
-                bundle.putString("hours", finalSchedule);
-                bundle.putString("instructor", course.instructor);
-                bundle.putInt("credit", course.credit);
-                bundle.putInt("ects", course.ects);
+                bundle.putInt("index", realPos);
                 fragment.setArguments(bundle);
                 fragment.show(context.getSupportFragmentManager(), "courseInfo");
             }

@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import anandroid.com.bouncourseplanner.R;
+import data.Models;
+import helper.CourseHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,9 +28,11 @@ public class CourseInfoFragment extends DialogFragment implements DialogInterfac
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Bundle bundle = getArguments();
+        int index = bundle.getInt("index");
+        Models.Course course = CourseHelper.courses.get(index);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(bundle.getString("codeSec"));
-        builder.setMessage(bundle.getString("name"));
+        builder.setTitle(course.codeSec);
+        builder.setMessage(course.name);
         builder.setPositiveButton("Add", this);
         builder.setNegativeButton("OK", this);
 
@@ -38,10 +42,10 @@ public class CourseInfoFragment extends DialogFragment implements DialogInterfac
         TextView creditTV = (TextView) view.findViewById(R.id.credit);
         TextView ectsTV = (TextView) view.findViewById(R.id.ects);
 
-        instructorTV.setText(bundle.getString("instructor"));
-        hoursTV.setText(bundle.getString("hours"));
-        creditTV.setText(String.valueOf(bundle.getInt("credit")));
-        ectsTV.setText(String.valueOf(bundle.getInt("ects")));
+        instructorTV.setText(course.instructor);
+        hoursTV.setText(course.scheduleStr);
+        creditTV.setText(String.valueOf(course.credit));
+        ectsTV.setText(String.valueOf(course.ects));
 
         builder.setView(view);
         return builder.create();

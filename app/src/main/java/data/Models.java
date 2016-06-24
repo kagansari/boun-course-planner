@@ -13,6 +13,7 @@ public class Models {
         public int ects;
         public String instructor;
         public ArrayList<ScheduleItem> schedule;
+        public String scheduleStr;
     }
 
     public static class ScheduleItem {

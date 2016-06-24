@@ -14,6 +14,7 @@ import java.util.List;
 
 import adapter.CourseListAdapter;
 import anandroid.com.bouncourseplanner.R;
+import data.Models;
 import data.Models.Course;
 
 /**
@@ -35,9 +36,22 @@ public class CourseHelper {
             is.read(buffer);
             is.close();
             courses = gson.fromJson(new String(buffer, "UTF-8"), new TypeToken<List<Course>>(){}.getType());
+            initHoursString();
             adapter = new CourseListAdapter(context);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void initHoursString() {
+        for (int i = 0; i < courses.size(); i++) {
+            Course course = courses.get(i);
+            String scheduleStr = "";
+            for (int j = 0; j < course.schedule.size(); j++) {
+                Models.ScheduleItem schedule = course.schedule.get(j);
+                scheduleStr += schedule.day + schedule.hour + ", ";
+            }
+            course.scheduleStr = scheduleStr;
         }
     }
 
