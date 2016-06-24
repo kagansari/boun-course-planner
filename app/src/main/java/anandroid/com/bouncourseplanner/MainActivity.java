@@ -21,6 +21,7 @@ import java.util.List;
 
 import adapter.PageAdapter;
 import data.Models;
+import helper.CourseHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        CourseHelper.init(this);
         initTabs();
         initDrawer();
     }

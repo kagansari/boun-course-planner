@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
@@ -14,16 +15,15 @@ import java.util.ArrayList;
 
 import anandroid.com.bouncourseplanner.R;
 import data.Models;
+import helper.CourseHelper;
 
 public class CourseListAdapter extends BaseAdapter implements Filterable {
 
     public LayoutInflater inflater;
-    public ArrayList<Models.Course> courses;
     public ArrayList<Models.Course> visibleCourses;
     public Filter searchFilter;
 
-    public CourseListAdapter(Context context, ArrayList<Models.Course> courses) {
-        this.courses = courses;
+    public CourseListAdapter(Context context) {
         this.visibleCourses = new ArrayList<>();
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         searchFilter = new SearchFilter();
@@ -46,10 +46,38 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+        final Models.Course course = visibleCourses.get(position);
+
         View row = inflater.inflate(R.layout.row_course, null);
         TextView courseCodeSecTV = (TextView) row.findViewById(R.id.courseCodeSecTV);
         TextView courseScheduleTV = (TextView) row.findViewById(R.id.courseScheduleTV);
-        Models.Course course = visibleCourses.get(position);
+        final Button addBtn = (Button) row.findViewById(R.id.addBtn);
+        final Button removeBtn = (Button) row.findViewById(R.id.removeBtn);
+
+        boolean isInSchedule = CourseHelper.isInSchedule(course);
+        if (isInSchedule) {
+            removeBtn.setVisibility(View.VISIBLE);
+        } else {
+            addBtn.setVisibility(View.VISIBLE);
+        }
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CourseHelper.addToSchedule(course);
+                addBtn.setVisibility(View.INVISIBLE);
+                removeBtn.setVisibility(View.VISIBLE);
+            }
+        });
+        removeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CourseHelper.removeFromSchedule(course);
+                addBtn.setVisibility(View.VISIBLE);
+                removeBtn.setVisibility(View.INVISIBLE);
+            }
+        });
+
         courseCodeSecTV.setText(course.codeSec);
         String schedule = "";
         for (Models.ScheduleItem item: course.schedule) {
@@ -76,8 +104,8 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
             }
 
             ArrayList<Models.Course> values = new ArrayList<>();
-            for (int i = 0; i < courses.size(); i++) {
-                Models.Course course = courses.get(i);
+            for (int i = 0; i < CourseHelper.courses.size(); i++) {
+                Models.Course course = CourseHelper.courses.get(i);
                 if (course.codeSec.toLowerCase().startsWith(constraint.toString().toLowerCase())) {
                     values.add(course);
                 }
