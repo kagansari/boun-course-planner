@@ -81,10 +81,8 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
 
             ArrayList<Models.Course> values = new ArrayList<>();
             for (int i = 0; i < courses.size(); i++) {
-                Log.d("-------------", "scanning " + i);
                 Models.Course course = courses.get(i);
                 if (course.codeSec.toLowerCase().startsWith(constraint.toString().toLowerCase())) {
-                    Log.d("-------------", "added " + i);
                     values.add(course);
                 }
 
