@@ -18,7 +18,7 @@ import helper.CourseHelper;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CourseInfoFragment extends DialogFragment implements DialogInterface.OnClickListener {
+public class CourseInfoFragment extends DialogFragment {
 
 
     public CourseInfoFragment() {
@@ -29,12 +29,28 @@ public class CourseInfoFragment extends DialogFragment implements DialogInterfac
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Bundle bundle = getArguments();
         int index = bundle.getInt("index");
-        Models.Course course = CourseHelper.courses.get(index);
+        final Models.Course course = CourseHelper.courses.get(index);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(course.codeSec);
         builder.setMessage(course.name);
-        builder.setPositiveButton("Add", this);
-        builder.setNegativeButton("OK", this);
+        if (CourseHelper.isInSchedule(course)) {
+            builder.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    CourseHelper.removeFromSchedule(course);
+                    CourseHelper.adapter.notifyDataSetChanged();
+                }
+            });
+        } else {
+            builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    CourseHelper.addToSchedule(course);
+                    CourseHelper.adapter.notifyDataSetChanged();
+                }
+            });
+        }
+        builder.setNegativeButton("OK", null);
 
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_course_info, null);
         TextView instructorTV = (TextView) view.findViewById(R.id.instuctor);
@@ -49,10 +65,5 @@ public class CourseInfoFragment extends DialogFragment implements DialogInterfac
 
         builder.setView(view);
         return builder.create();
-    }
-
-    @Override
-    public void onClick(DialogInterface dialog, int which) {
-
     }
 }

@@ -23,7 +23,7 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
 
     public LayoutInflater inflater;
     public ArrayList<Models.Course> visibleCourses;
-    public Filter searchFilter;
+    public SearchFilter searchFilter;
     public AppCompatActivity context;
 
     public CourseListAdapter(Context context) {
@@ -85,16 +85,15 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
             @Override
             public void onClick(View v) {
                 CourseHelper.addToSchedule(course);
-                addBtn.setVisibility(View.INVISIBLE);
-                removeBtn.setVisibility(View.VISIBLE);
+                CourseHelper.adapter.notifyDataSetChanged();
             }
         });
+
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CourseHelper.removeFromSchedule(course);
-                addBtn.setVisibility(View.VISIBLE);
-                removeBtn.setVisibility(View.INVISIBLE);
+                CourseHelper.adapter.notifyDataSetChanged();
             }
         });
         return row;
@@ -133,6 +132,10 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             visibleCourses = (ArrayList<Models.Course>) results.values;
+            notifyDataSetChanged();
+        }
+
+        public void publishResults() {
             notifyDataSetChanged();
         }
     }
