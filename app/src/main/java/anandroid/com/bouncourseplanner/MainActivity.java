@@ -1,6 +1,7 @@
 package anandroid.com.bouncourseplanner;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -11,8 +12,9 @@ import android.widget.LinearLayout;
 
 import adapter.PageAdapter;
 import helper.CourseHelper;
+import interfaces.OnScheduleChangedListener;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnScheduleChangedListener {
 
     public ViewPager viewPager;
     public PageAdapter pageAdapter;
@@ -51,5 +53,10 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(drawerToggle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    public void onScheduleChanged() {
+        pageAdapter.scheduleFragment.updateSchedule();
     }
 }

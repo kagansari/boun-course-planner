@@ -21,4 +21,10 @@ public class Models {
         public int hour;
         public String room;
     }
+
+    public static class TableItem {
+        public String codeSec;
+        public int row;
+        public int col;
+    }
 }

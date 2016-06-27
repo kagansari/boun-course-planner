@@ -14,6 +14,8 @@ public class PageAdapter extends FragmentPagerAdapter {
 
     public static final String key = "object";
 
+    public SearchFragment searchFragment;
+    public ScheduleFragment scheduleFragment;
     public PageAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -27,9 +29,13 @@ public class PageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new SearchFragment();
+                SearchFragment fragment = new SearchFragment();
+                this.searchFragment = fragment;
+                return searchFragment;
             case 1:
-                return new ScheduleFragment();
+                ScheduleFragment fragment1 = new ScheduleFragment();
+                this.scheduleFragment = fragment1;
+                return scheduleFragment;
         }
         return null;
     }

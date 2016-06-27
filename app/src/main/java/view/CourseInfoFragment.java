@@ -11,7 +11,9 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
 
+import anandroid.com.bouncourseplanner.MainActivity;
 import anandroid.com.bouncourseplanner.R;
+import anandroid.com.bouncourseplanner.SearchFragment;
 import data.Models;
 import helper.CourseHelper;
 
@@ -39,6 +41,7 @@ public class CourseInfoFragment extends DialogFragment {
                 public void onClick(DialogInterface dialog, int which) {
                     CourseHelper.removeFromSchedule(course);
                     CourseHelper.adapter.notifyDataSetChanged();
+                    ((MainActivity) getActivity()).onScheduleChanged();
                 }
             });
         } else {
@@ -47,6 +50,7 @@ public class CourseInfoFragment extends DialogFragment {
                 public void onClick(DialogInterface dialog, int which) {
                     CourseHelper.addToSchedule(course);
                     CourseHelper.adapter.notifyDataSetChanged();
+                    ((MainActivity) getActivity()).onScheduleChanged();
                 }
             });
         }

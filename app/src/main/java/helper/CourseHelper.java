@@ -1,8 +1,6 @@
 package helper;
 
 import android.content.Context;
-import android.widget.EditText;
-import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -13,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adapter.CourseListAdapter;
-import anandroid.com.bouncourseplanner.R;
 import data.Models;
 import data.Models.Course;
 
@@ -53,6 +50,43 @@ public class CourseHelper {
             }
             course.scheduleStr = scheduleStr;
         }
+    }
+
+    public static ArrayList<Models.TableItem> getScheduleTable() {
+        ArrayList<Models.TableItem> items = new ArrayList<>();
+        for (int i = 0; i < CourseHelper.schedule.size(); i++) {
+            Course course = schedule.get(i);
+            for (int j = 0; j < course.schedule.size(); j++) {
+                Models.ScheduleItem item = course.schedule.get(j);
+                Models.TableItem tableItem = new Models.TableItem();
+                tableItem.codeSec = course.codeSec;
+                tableItem.row = item.hour;
+                int col = -1;
+                switch (item.day) {
+                    case "M":
+                        col = 1;
+                        break;
+                    case "T":
+                        col = 2;
+                        break;
+                    case "W":
+                        col = 3;
+                        break;
+                    case "Th":
+                        col = 4;
+                        break;
+                    case "F":
+                        col = 5;
+                        break;
+                    case "S":
+                        col = 6;
+                        break;
+                }
+                tableItem.col = col;
+                items.add(tableItem);
+            }
+        }
+        return items;
     }
 
     public static boolean isInSchedule(Course course) {

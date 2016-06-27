@@ -1,29 +1,20 @@
 package anandroid.com.bouncourseplanner;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import adapter.CourseListAdapter;
-import data.Models;
 import helper.CourseHelper;
+import interfaces.OnScheduleChangedListener;
 
 
 /**
@@ -33,6 +24,13 @@ public class SearchFragment extends Fragment implements TextWatcher {
 
     public ListView courseList;
     public EditText courseET;
+
+    private OnScheduleChangedListener onScheduleChangedListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
 
     public SearchFragment() {
     }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import anandroid.com.bouncourseplanner.MainActivity;
 import anandroid.com.bouncourseplanner.R;
 import data.Models;
 import helper.CourseHelper;
@@ -86,6 +87,7 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
             public void onClick(View v) {
                 CourseHelper.addToSchedule(course);
                 CourseHelper.adapter.notifyDataSetChanged();
+                ((MainActivity)context).onScheduleChanged();
             }
         });
 
@@ -94,6 +96,7 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
             public void onClick(View v) {
                 CourseHelper.removeFromSchedule(course);
                 CourseHelper.adapter.notifyDataSetChanged();
+                ((MainActivity)context).onScheduleChanged();
             }
         });
         return row;
