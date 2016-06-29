@@ -95,7 +95,7 @@ public class ScheduleFragment extends Fragment {
             GridLayout.Spec rowSpan = GridLayout.spec(i+1);
             GridLayout.Spec colSpan = GridLayout.spec(0);
             GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpan, colSpan);
-            params.setGravity(Gravity.RIGHT);
+            params.setGravity(Gravity.CENTER | Gravity.RIGHT);
             cell.setLayoutParams(params);
             cell.addView(tv);
             scheduleGL.addView(cell);

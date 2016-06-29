@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/courseCellLL"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_row="12"
+    app:layout_column="1"
+    app:layout_rowWeight="1"
+    app:layout_columnWeight="1"
+    app:layout_gravity="fill"
+    android:gravity="center"
+    android:padding="10dp">
+</LinearLayout>
