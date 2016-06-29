@@ -112,9 +112,9 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults filterResults = new FilterResults();
-            filterResults.values = new ArrayList<>();
-            filterResults.count = 0;
             if (constraint == null || constraint.length() == 0) {
+                filterResults.values = CourseHelper.schedule;
+                filterResults.count = CourseHelper.schedule.size();
                 return filterResults;
             }
 
