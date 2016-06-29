@@ -60,26 +60,26 @@ public class CourseHelper {
                 Models.ScheduleItem item = course.schedule.get(j);
                 Models.TableItem tableItem = new Models.TableItem();
                 tableItem.codeSec = course.codeSec;
-                tableItem.row = item.hour;
+                tableItem.row = item.hour - 1;
                 int col = -1;
                 switch (item.day) {
                     case "M":
-                        col = 1;
+                        col = 0;
                         break;
                     case "T":
-                        col = 2;
+                        col = 1;
                         break;
                     case "W":
-                        col = 3;
+                        col = 2;
                         break;
                     case "Th":
-                        col = 4;
+                        col = 3;
                         break;
                     case "F":
-                        col = 5;
+                        col = 4;
                         break;
                     case "S":
-                        col = 6;
+                        col = 5;
                         break;
                 }
                 tableItem.col = col;
