@@ -86,7 +86,7 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
             @Override
             public void onClick(View v) {
                 CourseHelper.addToSchedule(course);
-                CourseHelper.adapter.notifyDataSetChanged();
+                CourseHelper.courseListAdapter.notifyDataSetChanged();
                 ((MainActivity)context).onScheduleChanged();
             }
         });
@@ -95,7 +95,7 @@ public class CourseListAdapter extends BaseAdapter implements Filterable {
             @Override
             public void onClick(View v) {
                 CourseHelper.removeFromSchedule(course);
-                CourseHelper.adapter.notifyDataSetChanged();
+                CourseHelper.courseListAdapter.notifyDataSetChanged();
                 ((MainActivity)context).onScheduleChanged();
             }
         });

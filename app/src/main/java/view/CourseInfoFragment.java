@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import anandroid.com.bouncourseplanner.MainActivity;
 import anandroid.com.bouncourseplanner.R;
-import anandroid.com.bouncourseplanner.SearchFragment;
 import data.Models;
 import helper.CourseHelper;
 
@@ -40,7 +39,7 @@ public class CourseInfoFragment extends DialogFragment {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     CourseHelper.removeFromSchedule(course);
-                    CourseHelper.adapter.notifyDataSetChanged();
+                    CourseHelper.courseListAdapter.notifyDataSetChanged();
                     ((MainActivity) getActivity()).onScheduleChanged();
                 }
             });
@@ -49,7 +48,7 @@ public class CourseInfoFragment extends DialogFragment {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     CourseHelper.addToSchedule(course);
-                    CourseHelper.adapter.notifyDataSetChanged();
+                    CourseHelper.courseListAdapter.notifyDataSetChanged();
                     ((MainActivity) getActivity()).onScheduleChanged();
                 }
             });

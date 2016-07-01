@@ -23,6 +23,7 @@ import interfaces.OnScheduleChangedListener;
 public class SearchFragment extends Fragment implements TextWatcher {
 
     public ListView courseList;
+    public ListView conflictList;
     public EditText courseET;
 
     private OnScheduleChangedListener onScheduleChangedListener;
@@ -44,7 +45,9 @@ public class SearchFragment extends Fragment implements TextWatcher {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         courseList = (ListView) view.findViewById(R.id.courseList);
-        courseList.setAdapter(CourseHelper.adapter);
+        courseList.setAdapter(CourseHelper.courseListAdapter);
+        conflictList = (ListView) view.findViewById(R.id.conflictList);
+        conflictList.setAdapter(CourseHelper.conflictListAdapter);
         courseET = (EditText) view.findViewById(R.id.courseET);
         courseET.addTextChangedListener(this);
     }
@@ -55,7 +58,7 @@ public class SearchFragment extends Fragment implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        CourseHelper.adapter.getFilter().filter(s);
+        CourseHelper.courseListAdapter.getFilter().filter(s);
     }
 
     @Override

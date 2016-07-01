@@ -27,4 +27,9 @@ public class Models {
         public int row;
         public int col;
     }
+    public static class Conflict {
+        public String day;
+        public int hour;
+        public ArrayList<String> codeSecs = new ArrayList<>();
+    }
 }
