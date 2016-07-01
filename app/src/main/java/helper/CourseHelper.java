@@ -23,6 +23,10 @@ public class CourseHelper {
     public static ArrayList<Course> schedule;
     public static CourseListAdapter adapter;
 
+    public static final String[] days = {"M", "T", "W", "Th", "F", "S"};
+    public static final String[] daysLong = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+    public static final int hoursCount = 12;
+
     public static void init(Context context) {
         schedule = new ArrayList<>();
         Gson gson = new Gson();

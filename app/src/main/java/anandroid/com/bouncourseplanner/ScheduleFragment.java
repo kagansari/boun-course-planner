@@ -74,12 +74,11 @@ public class ScheduleFragment extends Fragment {
     }
 
     private void initTVs() {
-        String[] weeks = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-        for (int i = 0; i < weeks.length; i++) {
-            String week = weeks[i];
+        for (int i = 0; i < CourseHelper.daysLong.length; i++) {
+            String day = CourseHelper.daysLong[i];
             LinearLayout cell = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.cell_schedule, scheduleGL, false);
             TextView tv = new TextView(getActivity());
-            tv.setText(week);
+            tv.setText(day);
             GridLayout.Spec rowSpan = GridLayout.spec(0);
             GridLayout.Spec colSpan = GridLayout.spec(i+1);
             GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpan, colSpan);
@@ -88,7 +87,7 @@ public class ScheduleFragment extends Fragment {
             cell.addView(tv);
             scheduleGL.addView(cell);
         }
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < CourseHelper.hoursCount; i++) {
             LinearLayout cell = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.cell_schedule, scheduleGL, false);
             TextView tv = new TextView(getActivity());
             tv.setText(String.valueOf(i + 9));
